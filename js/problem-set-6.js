@@ -42,6 +42,14 @@ function sayHello() {
 
 function drawRectangle() {
 
+  var canvas = document.getElementById('canvas2');
+  
+
+  if (canvas.getContext) {
+    var ctx = canvas.getContext('2d');
+    ctx.fillRect();
+  }
+
 }
 
 /*
