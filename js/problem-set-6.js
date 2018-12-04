@@ -11,6 +11,9 @@
  */
 
 function sayHello() {
+  var ctx = document.getElementById('canvas1').getContext('2d');
+  ctx.font = '48px sans-serif';
+  ctx.fillText('Hello, World!', 10, 50);
 
 }
 
