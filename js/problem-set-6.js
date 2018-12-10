@@ -13,7 +13,7 @@
 function sayHello() {
   var ctx = document.getElementById('canvas1').getContext('2d');
   ctx.font = '48px sans-serif';
-  ctx.fillText('Hello, World!', 10, 50);
+  ctx.strokeText('Hello, World!', 10, 50);
 
 }
 
@@ -41,14 +41,33 @@ function sayHello() {
  */
 
 function drawRectangle() {
+  let rectangle = document.getElementById("canvas2").getContext("2d");
+  let height;
+  let width;
+  let x;
+  let y;
 
-  var canvas = document.getElementById('canvas2');
-  
+  do {height = Number(prompt("Height:"))
+}while (height >= canvas2.height && height < 1);
+console.log(height);
 
-  if (canvas.getContext) {
-    var ctx = canvas.getContext('2d');
-    ctx.fillRect();
-  }
+
+
+
+
+// var canvas = document.getElementById('canvas2');
+
+  //if (canvas.getContext) {
+  //  var ctx = canvas.getContext('2d');
+//
+//    let x = Number(prompt("X:"));
+  //  let y = Number(prompt("Y:"));
+  //  let width = Number(prompt("enter a width for your rectangle"));
+  //  let height = Number(prompt("enter a height for your rectangle"));
+
+
+    //ctx.strokeRect(x, y, width, height);
+//  }
 
 }
 
@@ -78,6 +97,24 @@ function drawRectangle() {
  */
 
 function drawColoredRectangle() {
+  var canvas = document.getElementById('canvas3');
+  var color = "black, blue, green, orange, purple, red, yellow";
+
+  if (canvas.getContext) {
+    var ctx = canvas.getContext('2d');
+
+    let color = prompt("enter a color for your rectangle");
+
+    while (color = prompt("enter a color for your rectangle")) {
+      if (color == false) {
+        prompt(color+"is not a supported color.");
+      }
+    }
+
+
+    ctx.fillStyle = color;
+    ctx.fillRect(10, 10, 100, 50);
+  }
 
 }
 
@@ -111,6 +148,16 @@ function drawColoredRectangle() {
  */
 
 function drawTriangle() {
+  var canvas = document.getElementById('canvas4');
+  if (canvas.getContext) {
+    var ctx = canvas.getContext('2d');
+
+    ctx.beginPath();
+    ctx.moveTo(75, 50);
+    ctx.lineTo(100, 75);
+    ctx.lineTo(100, 25);
+    ctx.fill();
+  }
 
 }
 
