@@ -42,50 +42,38 @@ function sayHello() {
 
 function drawRectangle() {
   let rectangle = document.getElementById("canvas2").getContext("2d");
-  let height;
-  let width;
-  let x;
-  let y;
+  let rectHeight;
+  let rectWidth;
+  let resmileyFace;
+  let rectY;
+  //Add limits to width height x and y at home.
+  do{rectHeight = Number(prompt("Height:"))
+}while(rectHeight >= canvas2.height && rectHeight < 1);
+console.log(rectHeight)
 
-  do {height = Number(prompt("Height:"))
-}while (height >= canvas2.height && height < 1);
+  do{rectWidth = Number(prompt("Width:"))
+}while(rectWidth >= canvas2.width && rectWidth < 1);
+console.log(rectWidth)
 
-do {width = Number(prompt("Width:"))
-}while(width >= canvas2.width && width < 1);
+  do{resmileyFace = Number(prompt("X-Coordinate:"))
+}while(resmileyFace <= canvas2.width && resmileyFace < 5)
+console.log(resmileyFace)
 
-do {x = Number(prompt("X-coordinate:"))
-}while(x <= canvas2.width && x < 5);
+do{rectY = Number(prompt("Y-Coordinate:"))
+}while(rectY <= canvas2.height && rectY < 5)
 
-do {y = Number(prompt("Y-coordinate:"))
-}while(y <= canvas2.height && y < 5);
-
-if(height > canvas2.height && width > canvas2.width && x > canvas2.width && y > canvas2.height){
-  alert("Your rectangle dimensions are improper");
+if(rectHeight > canvas2.height && rectWidth > canvas2.width && resmileyFace > canvas2.width && rectY > canvas2.height){
+  alert("These rectangle dimensions are improper! Please try again!");
 }
-else {
+else{
+  console.log(rectY)
   rectangle.clearRect(0, 0, canvas2.width, canvas2.height);
-  rectangle.strokeRect(x, y, width, height);
+  rectangle.strokeRect(resmileyFace, rectY, rectWidth, rectHeight);
 }
 
 
-
-
-
-// var canvas = document.getElementById('canvas2');
-
-  //if (canvas.getContext) {
-  //  var ctx = canvas.getContext('2d');
-//
-//    let x = Number(prompt("X:"));
-  //  let y = Number(prompt("Y:"));
-  //  let width = Number(prompt("enter a width for your rectangle"));
-  //  let height = Number(prompt("enter a height for your rectangle"));
-
-
-    //ctx.strokeRect(x, y, width, height);
-//  }
-
 }
+
 
 /*
  * Color. 3 points.
@@ -113,25 +101,16 @@ else {
  */
 
 function drawColoredRectangle() {
-  let coloredRectangle = document.getElementById("canvas3").getContext("2d");
-  coloredRectangle.clearRect(0, 0, canvas3.width, canvas3.height);
-  let userInputColor;
-  let drawEnabled = false;
-
-  userInputColor = prompt("Enter the desired color for your rectangle");
-  if (userInputColor == "yellow" || userInputColor == "red" || userInputColor == "purple" || userInputColor == "orange" || userInputColor == "green" || userInputColor == "blue" || userInputColor == "black"){
-    drawEnabled = false;
-  }
-  else {
-    alert(`${userInputcolor} is not a supported color. Please choose another color.`);
-  }
-  if (drawEnabled == true) {
-    coloredRectangle.fillStyle = userInputColor;
-    coloredRectangle.fillRect(10, 10, 100, 50);
+  let op = document.getElementById("canvas3").getContext("2d");
+  let color = String(prompt("Color:"));
+  if (color == "black" || color == "blue" || color =="green" || color == "orange" || color == "purple" || color == "red" || color == "yellow"){
+    op.fillStyle = color;
+    op.fillRect(10, 10, 100, 50);
+  } else {
+    alert(color+" is not a supported color");
+    op.clearRect(0, 0, 1024, 512);
   }
 }
-
-
 
 
 /*
@@ -164,14 +143,33 @@ function drawColoredRectangle() {
  */
 
 function drawTriangle() {
-let triangle = document.getElementById('canvas4').getContext("2d");
-  let side1 = Number(prompt("Please enter a positive integer for your left side length"));
-  let side2 = Number(prompt("Please enter a positive integer for your bottom side length"));
-  let side3 = Number(prompt("Please enter a positive integer for hypotenuse length"));
-  let triangleX = 10;
-  let triangleY = 10;
-  let drawEnabled = false
-  triangle.clearRect(0, 0, canvas4.width, canvas4.height);
+let triangle = document.getElementById("canvas4").getContext("2d");
+let side1 = Number(prompt("Please enter a positive integer for your left side length."));
+let side2 = Number(prompt("Please enter a positive integer for your bottom side length."));
+let side3 = Number(prompt("Please enter a positive integer for your hypotenuse length."));
+let triangleX = 10;
+let triangleY = 10;
+let drawEnabled = false;
+triangle.clearRect(0, 0, canvas4.width, canvas4.height)
+console.log(side1);
+console.log(side2);
+console.log(side3);
+
+if((side1*side1 + side2*side2 == side3*side3) && side1>0 && side2>0 && side3>0 && canvas4.width-triangleX-side1>=0 && canvas4.height-triangleY-side2>=0){
+  drawEnabled = true;
+}
+else{
+  alert("Those parameters will not fit the canvas.")
+}
+if(drawEnabled == true){
+  triangle.beginPath();
+  triangle.moveTo(triangleX, triangleY);
+  triangle.lineTo(triangleX, triangleY+side1);
+  triangle.lineTo(triangleX+side2, triangleY+side1);
+  triangle.lineTo(triangleX, triangleY);
+  triangle.closePath();
+  triangle.stroke();
+}
 
 }
 
@@ -195,6 +193,35 @@ let triangle = document.getElementById('canvas4').getContext("2d");
  */
 
 function drawSmileyFace() {
+  let radius;
+  let canvas = document.getElementById('canvas5');
+  let ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+	while(true){
+		radius=Number(prompt("Please enter a good radius please"));
+		if(radius>=1 && radius<=canvas.width && Number.isInteger(radius)){
+			break;
+		}
+	}
+  let x=canvas.width;
+  let y=canvas.height;
+  let eyeRadius=radius*.1
+  let mouthRadius=radius*.7
+  ctx.beginPath();
+  ctx.arc(x/2, y/2, radius, 0, Math.PI*2); // Face
+  ctx.stroke();
+
+  ctx.beginPath(); //Right Eye
+  ctx.arc(x/2 - radius/3, y/2-radius/4, eyeRadius,0, Math.PI*2);
+  ctx.stroke();
+
+  ctx.beginPath(); //Left Eye
+  ctx.arc(x/2+radius/3, y/2-radius/4, eyeRadius,0, Math.PI*2);
+  ctx.stroke();
+
+  ctx.beginPath(); //Mouth
+  ctx.arc(x/2, y/2, mouthRadius,0, Math.PI);
+  ctx.stroke();
 
 }
 
@@ -217,8 +244,38 @@ function drawSmileyFace() {
  */
 
 function drawStar() {
+    let canvas = document.getElementById('canvas6');
+    let ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-}
+      let outerRadius=Number(prompt("Enter a valid outer radius"));
+      let innerRadius=Number(prompt("Enter a valid inner radius"));
+      if (outerRadius>=innerRadius && canvas.width>=outerRadius+125 && canvas.height>=outerRadius+125 && innerRadius>=1 && outerRadius>=1){
+        let points=5;
+        let outerx=[];
+        let outery=[];
+        let innerx=[];
+        let innery=[];
+        for(let i=0;i<points;i++){
+          outerx.push(Math.cos((Math.PI*2*i)/points-(Math.PI/2))*outerRadius+125);
+          outery.push(Math.sin((Math.PI*2*i)/points-(Math.PI/2))*outerRadius+125);
+          innerx.push(Math.cos(((Math.PI*2*i)/points)-(Math.PI/2)+(Math.PI/points))*innerRadius+125);
+          innery.push(Math.sin(((Math.PI*2*i)/points)-(Math.PI/2)+(Math.PI/points))*innerRadius+125);
+        }
+        ctx.beginPath();
+        ctx.moveTo(outerx[0], outery[0]);
+        for(let j=0;j<outerx.length;j++){
+          ctx.lineTo(innerx[j], innery[j]);
+          ctx.lineTo(outerx[j+1], outery[j+1]);
+        }
+        ctx.lineTo(outerx[0], outery[0]);
+        ctx.stroke();
+        ctx.closePath();
+    }
+    else{
+        alert('invalid inputs');
+      }
+  }
 
 /*
  * Stop Sign. 7 points.
@@ -236,7 +293,30 @@ function drawStar() {
  */
 
 function drawStopSign() {
+  let stopSign = document.getElementById("canvas7").getContext("2d");
+  stopSign.clearRect(0, 0, canvas7.height, canvas7.width)
+  let side = 80;
+  let c = Number((80/Math.sqrt(2)).toFixed(0));
+  let stopX = 70;
+  let stopY = 10;
 
+  stopSign.beginPath();
+  stopSign.moveTo(stopX,stopY);
+  stopSign.lineTo(stopX+side,stopY);
+  stopSign.lineTo(stopX+side+c,stopY+c);
+  stopSign.lineTo(stopX+side+c,stopY+side+c);
+  stopSign.lineTo(stopX+side,stopY+side+c+c);
+  stopSign.lineTo(stopX,stopY+side+c+c);
+  stopSign.lineTo(stopX-c,stopY+side+c);
+  stopSign.lineTo(stopX-c,stopY+c);
+  stopSign.lineTo(stopX,stopY);
+  stopSign.fillStyle="red";
+  stopSign.fill();
+  stopSign.closePath();
+
+  stopSign.fillStyle="white";
+  stopSign.font="65px sans-serif";
+  stopSign.fillText("STOP", 22, 133);
 }
 
 /*
@@ -258,7 +338,43 @@ function drawStopSign() {
  */
 
 function drawPyramid() {
+  let op = document.getElementById("canvas8").getContext("2d");
+  op.clearRect(0,0,1024,512);
 
+  let s = Number(prompt("Length:"));
+  let x = 10;
+  let y = 502;
+
+  if (isNaN(s)){
+    alert("Your input is not a number");
+  } else if (s>100){
+    alert("The pyramid will not fit on the canvas");
+  } else {
+    op.beginPath();
+    let odd = true;
+    for (let a=0; a<5;a++){
+      for (let i=0; i<5-a; i++){
+        op.moveTo(x,y);
+        op.lineTo(x+s,y);
+        op.lineTo(x+s,y-s);
+        op.lineTo(x,y-s);
+        op.lineTo(x,y);
+        if (odd){
+          x+=s;
+        } else {
+          x-=s;
+        }
+      }
+      if (odd){
+        x-=s*3/2;
+      } else {
+        x+=s*3/2;
+      }
+      y-=s
+      odd = !odd;
+    }
+    op.stroke();
+  }
 }
 
 /*
@@ -290,6 +406,62 @@ function drawPyramid() {
  * unsupported color.
  */
 
-function drawHouse() {
+function drawHouse(){let houseDraw = document.getElementById("canvas9").getContext("2d");
+  houseDraw.clearRect(0,0,canvas9.width, canvas9.height);
+  let houseColor = prompt("Enter a house color.");
+  let doorColor = prompt("Enter a door color.");
+  if ((houseColor == "blue" || houseColor == "brown"|| houseColor == "green" || houseColor == "orange" || houseColor == "purple" || houseColor == "red" || houseColor == "yellow") && (doorColor == "blue" || doorColor == "brown"|| doorColor == "green" || doorColor == "orange" || doorColor == "purple" || doorColor == "red" || doorColor == "yellow")){
+//housebody
+    houseDraw.fillStyle="black";
+    houseDraw.fillRect(150,300,724,450);
+    houseDraw.fillStyle=houseColor;
+    houseDraw.fillRect(151,301,722,448);
+    houseDraw.fill();
+//roofo
+    houseDraw.beginPath();
+    houseDraw.moveTo(150,300);
+    houseDraw.lineTo(510,10);
+    houseDraw.lineTo(860,300);
+    houseDraw.lineTo(150,300);
+    houseDraw.fillStyle="black";
+    houseDraw.fill();
+    houseDraw.closePath();
+    houseDraw.beginPath();
+    houseDraw.moveTo(150,300);
+    houseDraw.lineTo(510,12);
+    houseDraw.lineTo(870,300);
+    houseDraw.lineTo(150,300);
+    houseDraw.fillStyle="gray";
+    houseDraw.fill();
+    houseDraw.closePath();
+    //window
+    houseDraw.fillStyle="black";
+    houseDraw.fillRect(260,620,80,80);
+    houseDraw.fillRect(260,400,80,80);
+    houseDraw.fillRect(684,620,80,80);
+    houseDraw.fillRect(684,400,80,80);
+    houseDraw.fillStyle="lightblue";
+    houseDraw.fillRect(261,620,80,80);
+    houseDraw.fillRect(261,400,80,80);
+    houseDraw.fillRect(685,620,80,80);
+    houseDraw.fillRect(685,400,80,80);
+//door
+    houseDraw.fillStyle="black"
+    houseDraw.fillRect(462,590,100,160);
+    houseDraw.fillStyle=doorColor;
+    houseDraw.fillRect(462,590,100,160);
+//doorknob
+    houseDraw.beginPath();
+    houseDraw.arc(545,670,8,0,Math.PI*2,true);
+    houseDraw.fillStyle="black";
+    houseDraw.fill();
+    houseDraw.closePath();
+    houseDraw.beginPath();
+    houseDraw.arc(545,670,7,0,Math.PI*2,true);
+    houseDraw.fillStyle="yellow";
+    houseDraw.fill();
+    houseDraw.closePath();
 
-}
+  } else {
+    alert("One of your colors is not supported");
+  }}
